@@ -1,0 +1,16 @@
+<form>
+    <input type="date" name="date" id="date"
+           ng-model="birthday"
+           ng-model-options="{updateOn: 'default blur', debounce: {'default': 500, 'blur': 0}}"
+            ng-change="getDates()"/>
+</form>
+
+{{ birthday | date:'medium' }}
+
+<div>
+    <ul>
+        <li ng-repeat="birthday in birthdays | orderBy:'timeToNext':true">
+            Vous féterez votre <strong> {{ birthday.next }} </strong> anif en <strong>{{birthday.type}}</strong> dans <strong>{{ birthday.timeFromNow }}</strong>
+        </li>
+    </ul>
+</div>
