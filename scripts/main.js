@@ -1,3 +1,5 @@
+moment.locale('fr');
+
 angular.module('everyversary', ['ui.router']).config(function ($stateProvider, $urlRouterProvider) {
 
     $urlRouterProvider.otherwise("/");
