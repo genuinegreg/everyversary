@@ -10,10 +10,10 @@
 <div>
     <ul>
         <li ng-repeat="birthday in birthdays | orderBy:'timeToNext':true">
-            Vous féterez vos
-            <strong> {{ birthday.next | number }}
+            Vous féterez votre
+            <strong> {{ birthday.next | number }} {{birthday.dateLabel}} en
                 <ng-pluralize count="birthday.next" when="birthday.label"/>
-            </strong> dans <strong>{{ birthday.timeFromNow }}</strong>
+            </strong>  dans <strong>{{ birthday.timeFromNow }}</strong>
         </li>
     </ul>
 </div>

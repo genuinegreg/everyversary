@@ -126,29 +126,47 @@ angular.module('everyversary').service('Anniversary', function () {
 
     }
 
-    Anniversary.prototype.getAges = function (date) {
+    Anniversary.prototype.getAnniversaries = function (dates) {
 
-        var age = Date.now() - date;
+        if (!(dates instanceof Array)) {
+            dates = [
+                dates
+            ]
+        }
 
-        return Object.keys(timeUnits).map(function (key) {
+        function getAnniversary(date, label) {
 
-            var value = age / timeUnits[key].duration / timeUnits[key].factor;
-            var flat = Math.floor(value) * timeUnits[key].factor;
-            var next = (flat + timeUnits[key].factor);
-            var timeToNext = age - (next * timeUnits[key].duration);
+            var age = Date.now() - date;
 
-            return {
-                age: value,
-                weight: value % 1,
-                type: key,
-                flatAge: flat,
-                next: next,
-                timeToNext: timeToNext,
-                timeFromNow: moment.duration(timeToNext).humanize(),
-                label: timeUnits[key].label,
-                labelPlural: timeUnits[key].labelPlural || undefined
-            }
-        })
+            return Object.keys(timeUnits).map(function (key) {
+
+                var value = age / timeUnits[key].duration / timeUnits[key].factor;
+                var flat = Math.floor(value) * timeUnits[key].factor;
+                var next = (flat + timeUnits[key].factor);
+                var timeToNext = age - (next * timeUnits[key].duration);
+
+                return {
+                    age: value,
+                    weight: value % 1,
+                    type: key,
+                    flatAge: flat,
+                    next: next,
+                    timeToNext: timeToNext,
+                    timeFromNow: moment.duration(timeToNext).humanize(),
+                    dateLabel: label,
+                    label: timeUnits[key].label,
+                    labelPlural: timeUnits[key].labelPlural || undefined
+                }
+            })
+        }
+
+        // process dates & units
+        return dates.map(function (date) {
+            return getAnniversary(date.date, date.label);
+        }).reduce(function (a, b, c, d)  {
+            return a.concat(b).sort();
+        });
+
 
 
     };

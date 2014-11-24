@@ -13,13 +13,28 @@ angular.module('everyversary', ['ui.router']).config(function ($stateProvider, $
 
                 $scope.birthday = new  Date(546530400000);
 
+
+
                 $scope.getDates = function() {
 
                     if (!($scope.birthday instanceof Date)) {
                         return;
                     }
 
-                    $scope.birthdays = Anniversary.getAges($scope.birthday);
+                    $scope.birthdays = Anniversary.getAnniversaries([
+                        {
+                            date: new Date('1987-04-27'),
+                            label: 'anniversaire'
+                        },
+                        {
+                            date: new Date('2014-10-01'),
+                            label: 'anniversaire d\'embauche'
+                        },
+                        {
+                            date: new Date('2004-06-01'),
+                            label: 'annivairsaire de permit'
+                        }
+                    ]);
                 };
 
                 $scope.getDates();
