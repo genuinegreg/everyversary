@@ -28,8 +28,7 @@ angular.module('everyversary').service('Anniversary', function () {
             day: {
                 duration: SECOND * MINUTE * HOUR * DAY,
                 factor: 1000,
-                label: 'jours',
-                labelPlural: {
+                label: {
                     one: 'jour',
                     other: 'jours'
                 }
@@ -53,7 +52,10 @@ angular.module('everyversary').service('Anniversary', function () {
             secondes: {
                 duration: SECOND,
                 factor: Math.pow(10, 9), // 1 000 000 000
-                label: 'secondes'
+                label: {
+                    one: 'seconde',
+                    other: 'secondes'
+                }
             },
             planete_mercure: {
                 duration: SECOND * MINUTE * HOUR * DAY * 87.5,
