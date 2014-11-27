@@ -18,7 +18,8 @@ angular.module('everyversary').service('Anniversary', function () {
                     other: 'ans'
                 }
             },
-            month: { duration: SECOND * MINUTE * HOUR * DAY * MONTH,
+            month: {
+                duration: SECOND * MINUTE * HOUR * DAY * MONTH,
                 factor: 100,
                 label: {
                     other: 'mois'
@@ -126,6 +127,10 @@ angular.module('everyversary').service('Anniversary', function () {
 
     }
 
+    Anniversary.prototype.put = function (date, label) {
+
+    };
+
     Anniversary.prototype.getAnniversaries = function (dates) {
 
         if (!(dates instanceof Array)) {
@@ -163,10 +168,9 @@ angular.module('everyversary').service('Anniversary', function () {
         // process dates & units
         return dates.map(function (date) {
             return getAnniversary(date.date, date.label);
-        }).reduce(function (a, b, c, d)  {
+        }).reduce(function (a, b, c, d) {
             return a.concat(b).sort();
         });
-
 
 
     };

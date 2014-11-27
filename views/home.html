@@ -10,10 +10,18 @@
 <div>
     <ul>
         <li ng-repeat="birthday in birthdays | orderBy:'timeToNext':true">
-            Vous féterez votre
-            <strong> {{ birthday.next | number }} {{birthday.dateLabel}} en
-                <ng-pluralize count="birthday.next" when="birthday.label"/>
-            </strong>  dans <strong>{{ birthday.timeFromNow }}</strong>
+            Greg fête
+            <strong>
+                <ng-pluralize count="birthday.next" when="{one: 'sa', other: 'ses'}"></ng-pluralize>
+                {{ birthday.next | number }}
+                <ng-pluralize count="birthday.next" when="birthday.label"></ng-pluralize>
+            </strong>
+            depuis
+            {{birthday.dateLabel}}
+            <strong>
+                dans
+                {{ birthday.timeFromNow }}
+            </strong>
         </li>
     </ul>
 </div>

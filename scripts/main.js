@@ -24,15 +24,15 @@ angular.module('everyversary', ['ui.router']).config(function ($stateProvider, $
                     $scope.birthdays = Anniversary.getAnniversaries([
                         {
                             date: new Date('1987-04-27'),
-                            label: 'anniversaire'
+                            label: 'sa naissance'
                         },
                         {
                             date: new Date('2014-10-01'),
-                            label: 'anniversaire d\'embauche'
+                            label: 'son embauche'
                         },
                         {
                             date: new Date('2004-06-01'),
-                            label: 'annivairsaire de permit'
+                            label: 'son permit'
                         }
                     ]);
                 };
