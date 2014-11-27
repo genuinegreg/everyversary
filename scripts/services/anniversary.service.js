@@ -12,7 +12,6 @@ angular.module('everyversary').service('Anniversary', function () {
             year: {
                 duration: SECOND * MINUTE * HOUR * DAY * YEAR,
                 factor: 1,
-                label: 'ans',
                 label: {
                     one: 'an',
                     other: 'ans'
@@ -170,7 +169,7 @@ angular.module('everyversary').service('Anniversary', function () {
         // process dates & units
         return dates.map(function (date) {
             return getAnniversary(date.date, date.label);
-        }).reduce(function (a, b, c, d) {
+        }).reduce(function (a, b) {
             return a.concat(b).sort();
         });
 
