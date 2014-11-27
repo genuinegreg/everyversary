@@ -6,7 +6,7 @@ angular.module('everyversary').service('Anniversary', function () {
         DAY = 24,
         YEAR = 365,
         MONTH = 365 / 12,
-        PLANETE_MARS_YEAR = 687;
+        PLANET_MARS_YEAR = 687;
 
     var timeUnits = {
             year: {
@@ -73,7 +73,7 @@ angular.module('everyversary').service('Anniversary', function () {
                 }
             },
             planete_mars: {
-                duration: SECOND * MINUTE * HOUR * DAY * PLANETE_MARS_YEAR,
+                duration: SECOND * MINUTE * HOUR * DAY * PLANET_MARS_YEAR,
                 factor: 1,
                 label: {
                     one: 'année martiene',
