@@ -125,12 +125,48 @@ angular.module('everyversary').service('Anniversary', function () {
 
 
     function Anniversary() {
-
+        this.restoreDates();
     }
 
     Anniversary.prototype.put = function (date, label) {
 
+        this.dates.push(
+            {
+                date: date,
+                label: label
+            }
+        );
+
+
+        this.persistDates();
+
     };
+
+    Anniversary.prototype.getDates = function() {
+        return this.dates;
+    };
+
+    Anniversary.prototype.pop = function(index) {
+
+        this.dates.pop(index);
+
+        this.persistDates()
+    };
+
+
+    Anniversary.prototype.persistDates = function() {
+        localStorage.dates = JSON.stringify(this.dates);
+    };
+
+    Anniversary.prototype.restoreDates = function() {
+        try {
+            this.dates = JSON.parse(localStorage.dates);
+        }
+        catch (e) {
+            this.dates = [];
+        }
+    };
+
 
     Anniversary.prototype.getAnniversaries = function (dates) {
 
