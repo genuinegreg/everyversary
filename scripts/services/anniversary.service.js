@@ -1,4 +1,4 @@
-angular.module('everyversary').service('Anniversary', function () {
+angular.module('everyversary').service('Anniversary', ['DateStore', function (DateStore) {
 
     var SECOND = 1000,
         MINUTE = 60,
@@ -125,48 +125,38 @@ angular.module('everyversary').service('Anniversary', function () {
 
 
     function Anniversary() {
-        this.restoreDates();
     }
 
-    Anniversary.prototype.put = function (date, label) {
 
-        this.dates.push(
-            {
-                date: date,
-                label: label
+    Anniversary.prototype.getAnniversary = function (date, label) {
+        var age = Date.now() - date;
+
+        return Object.keys(timeUnits).map(function (key) {
+
+            var value = age / timeUnits[key].duration / timeUnits[key].factor;
+            var flat = Math.floor(value) * timeUnits[key].factor;
+            var next = (flat + timeUnits[key].factor);
+            var timeToNext = age - (next * timeUnits[key].duration);
+
+            return {
+                age: value,
+                weight: value % 1,
+                type: key,
+                flatAge: flat,
+                next: next,
+                timeToNext: timeToNext,
+                timeFromNow: moment.duration(timeToNext).humanize(),
+                dateLabel: label,
+                label: timeUnits[key].label,
+                labelPlural: timeUnits[key].labelPlural || undefined
             }
-        );
-
-
-        this.persistDates();
-
+        })
     };
 
-    Anniversary.prototype.getDates = function() {
-        return this.dates;
+    Anniversary.prototype.getAnniversariesFromDateStore = function() {
+        console.log(DateStore.getDates());
+        return this.getAnniversaries(DateStore.getDates());
     };
-
-    Anniversary.prototype.pop = function(index) {
-
-        this.dates.pop(index);
-
-        this.persistDates()
-    };
-
-
-    Anniversary.prototype.persistDates = function() {
-        localStorage.dates = JSON.stringify(this.dates);
-    };
-
-    Anniversary.prototype.restoreDates = function() {
-        try {
-            this.dates = JSON.parse(localStorage.dates);
-        }
-        catch (e) {
-            this.dates = [];
-        }
-    };
-
 
     Anniversary.prototype.getAnniversaries = function (dates) {
 
@@ -176,43 +166,19 @@ angular.module('everyversary').service('Anniversary', function () {
             ]
         }
 
-        function getAnniversary(date, label) {
-
-            var age = Date.now() - date;
-
-            return Object.keys(timeUnits).map(function (key) {
-
-                var value = age / timeUnits[key].duration / timeUnits[key].factor;
-                var flat = Math.floor(value) * timeUnits[key].factor;
-                var next = (flat + timeUnits[key].factor);
-                var timeToNext = age - (next * timeUnits[key].duration);
-
-                return {
-                    age: value,
-                    weight: value % 1,
-                    type: key,
-                    flatAge: flat,
-                    next: next,
-                    timeToNext: timeToNext,
-                    timeFromNow: moment.duration(timeToNext).humanize(),
-                    dateLabel: label,
-                    label: timeUnits[key].label,
-                    labelPlural: timeUnits[key].labelPlural || undefined
-                }
-            })
+        if (dates.length === 0) {
+            return [];
         }
+
+        var _this = this;
 
         // process dates & units
         return dates.map(function (date) {
-            return getAnniversary(date.date, date.label);
+            return _this.getAnniversary(date.date, date.label);
         }).reduce(function (a, b) {
             return a.concat(b).sort();
         });
-
-
     };
 
-
     return new Anniversary();
-})
-;
+}]);

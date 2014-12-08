@@ -1,27 +1,79 @@
-<form>
-    <input type="date" name="date" id="date"
-           ng-model="birthday"
-           ng-model-options="{updateOn: 'default blur', debounce: {'default': 500, 'blur': 0}}"
-           ng-change="getDates()"/>
-</form>
+<div class="sixteen wide column">
+    <h1 class="ui dividing header">
+        Every-versary
+    </h1>
+</div>
 
-{{ birthday | date:'medium' }}
+<div class="four wide column">
+    <form class="ui form"
+          ng-submit="addBirthday(new.name, new.date, new.label)">
 
-<div>
-    <ul>
-        <li ng-repeat="birthday in birthdays | orderBy:'timeToNext':true">
-            Greg fête
-            <strong>
-                <ng-pluralize count="birthday.next" when="{one: 'sa', other: 'ses'}"></ng-pluralize>
-                {{ birthday.next | number }}
-                <ng-pluralize count="birthday.next" when="birthday.label"></ng-pluralize>
-            </strong>
+        <div class="ui field">
+            <label for="name">name</label>
+            <input type="text" name="name" id="name"
+                   ng-model="new.name"/>
+        </div>
+
+        <div class="field">
+            <label for="date">Date</label>
+            <input type="date" name="date" id="date"
+                   ng-model="new.date"
+                   ng-model-options="{updateOn: 'default blur', debounce: {'default': 1000, 'blur': 0}}"
+                   ng-change="formPlaceholderAnniversary(new.date)"/>
+        </div>
+
+        <div class="ui field">
+            <label for="label">Anniversary label</label> <br/>
+            <input type="text" name="label" id="label"
+                   ng-model="new.label"/>
+
+        </div>
+
+        {{placeholderAnniversary}}
+
+
+        <p>
+            <span ng-if="new.name">
+                {{new.name}}
+            </span>
+        <span ng-if="!new.name" class="text-muted">
+            Bob
+        </span>
+            {{new.name ? new.name : Bob}} fête
+            <ng-pluralize count="placeholderAnniversary.next" when="{one: 'sa', other: 'ses'}"></ng-pluralize>
+            {{ new.anniversary.next | number }}
+            <ng-pluralize count="placeholderAnniversary.next" when="placeholderAnniversary.label"></ng-pluralize>
             depuis
-            {{birthday.dateLabel}}
-            <strong>
-                dans
-                {{ birthday.timeFromNow }}
-            </strong>
-        </li>
-    </ul>
+            {{placeholderAnniversary.dateLabel}}
+            dans
+            {{ placeholderAnniversary.timeFromNow }}
+        </p>
+
+        <button type="submit" class="ui primary button">Ajouter</button>
+    </form>
+</div>
+
+<div class="twelve wide column">
+
+    <div ng-repeat="date in dates"> Yo {{ date }}</div>
+
+
+    <div>
+        <ul>
+            <li ng-repeat="birthday in anniversaries | orderBy:'timeToNext':true">
+                Greg fête
+                <strong>
+                    <ng-pluralize count="birthday.next" when="{one: 'sa', other: 'ses'}"></ng-pluralize>
+                    {{ birthday.next | number }}
+                    <ng-pluralize count="birthday.next" when="birthday.label"></ng-pluralize>
+                </strong>
+                depuis
+                {{birthday.dateLabel}}
+                <strong>
+                    dans
+                    {{ birthday.timeFromNow }}
+                </strong>
+            </li>
+        </ul>
+    </div>
 </div>

@@ -1,18 +1,22 @@
 <html>
 <head>
-
+    <link rel="stylesheet" href="bower_components/semantic-ui/dist/semantic.min.css"/>
 </head>
 <body ng-app="everyversary">
 
-<div ui-view></div>
+<div class="ui page grid" ui-view>
+</div>
 
 
 <script src="bower_components/angular/angular.min.js"></script>
 <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="bower_components/angular-local-storage/dist/angular-local-storage.min.js"></script>
 <script src="bower_components/moment/min/moment-with-locales.min.js"></script>
 
 <script src="scripts/main.js"></script>
 <script src="scripts/services/anniversary.service.js"></script>
+<script src="scripts/services/dateStore.services.js"></script>
+<script src="scripts/controllers/home.ctrl.js"></script>
 
 </body>
 </html>

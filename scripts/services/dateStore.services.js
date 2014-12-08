@@ -19,10 +19,13 @@ angular.module('everyversary').service('DateStore', ['localStorageService', func
      * @param date
      * @param label
      */
-    DateStore.prototype.add = function (date, label) {
+    DateStore.prototype.add = function (name, date, label) {
+
+        console.log(this.dates);
 
         this.dates.push(
             {
+                name: name,
                 date: date,
                 label: label
             }
@@ -46,9 +49,6 @@ angular.module('everyversary').service('DateStore', ['localStorageService', func
      * list all dates
      */
     DateStore.prototype.getDates = function () {
-
-        console.log('dates', this.dates.length);
-
         return this.dates;
     };
 
@@ -57,7 +57,7 @@ angular.module('everyversary').service('DateStore', ['localStorageService', func
      * @private
      */
     DateStore.prototype._persistDates = function () {
-        localStorageService.set('dates', JSON.stringify(this.dates));
+        localStorageService.set('dates', this.dates);
     };
 
     /**
@@ -65,11 +65,23 @@ angular.module('everyversary').service('DateStore', ['localStorageService', func
      * @private
      */
     DateStore.prototype._restoreDates = function () {
-        try {
-            this.dates = JSON.parse(localStorageService.set('dates'));
-        }
-        catch (e) {
+
+        this.dates = localStorageService.get('dates').map(function(date) {
+
+            return {
+                label: date.label,
+                date: new Date(date.date),
+                name: date.name
+            }
+        });
+
+
+
+        console.log(this.dates);
+
+        if (!(this.dates instanceof Array)) {
             this.dates = [];
+            this._persistDates();
         }
     };
 
