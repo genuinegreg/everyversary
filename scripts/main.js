@@ -12,5 +12,17 @@ angular.module('everyversary', ['ui.router', 'LocalStorageModule'])
                 url: "/",
                 templateUrl: "views/home.html",
                 controller: 'Home.Ctrl'
-            });
+            })
+            .state('home.add', {
+                url: 'add',
+                templateUrl: 'views/home.add.html',
+                //controller: 'Home.Add.Ctrl'
+            })
+
+            .state('home.edit', {
+                url: 'edit',
+                templateUrl: 'views/home.add.html',
+                //controller: 'Home.Add.Ctrl'
+            })
+
     });
